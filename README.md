@@ -2,7 +2,7 @@
 
 > One platform for API owners and developers. Publish APIs, manage access, track every request, and handle billing automatically.
 
-![Apilio](https://img.shields.io/badge/Apilio-API%20Billing%20Platform-indigo)
+![MeterFlow](https://img.shields.io/badge/Apilio-API%20Billing%20Platform-indigo)
 ![Node.js](https://img.shields.io/badge/Node.js-18+-green)
 ![React](https://img.shields.io/badge/React-19-blue)
 ![MongoDB](https://img.shields.io/badge/MongoDB-Atlas-green)
@@ -13,14 +13,14 @@
 
 | Service | URL |
 |---|---|
-| Frontend | https://apilio.vercel.app |
-| Backend API | https://apilio-backend.onrender.com |
+| Frontend | https://meterflow-frontend-eight.vercel.app/ |
+| Backend API | https://meterflow-backend-j04q.onrender.com |
 
 ---
 
-## 📌 What is Apilio?
+## 📌 What is MeterFlow?
 
-Apilio is a full-stack SaaS platform that lets you:
+MeterFlow is a full-stack SaaS platform that lets you:
 
 **As an API Owner:**
 - Register your API and set pricing plans
@@ -43,7 +43,7 @@ Apilio is a full-stack SaaS platform that lets you:
 ```
 Developer sends request
         ↓
-Apilio Gateway (Express)
+MeterFlow Gateway (Express)
         ↓
 ┌───────────────────────┐
 │  1. Validate API Key  │ ← MongoDB / Redis cache
@@ -232,13 +232,13 @@ apilio/
 
 ### 1. Clone repos
 ```bash
-git clone https://github.com/YOUR_USERNAME/apilio-backend.git
-git clone https://github.com/YOUR_USERNAME/apilio-frontend.git
+git clone https://github.com/YOUR_USERNAME/meterflow-backend.git
+git clone https://github.com/YOUR_USERNAME/meterflow-frontend.git
 ```
 
 ### 2. Backend setup
 ```bash
-cd apilio-backend
+cd meterflow-backend
 npm install
 ```
 
@@ -263,7 +263,7 @@ npm run dev
 
 ### 3. Frontend setup
 ```bash
-cd apilio-frontend
+cd meterflow-frontend
 npm install
 npm start
 # Opens http://localhost:3000 ✅
@@ -349,7 +349,7 @@ DELETE /api/user/account
 ```bash
 # Make a request through the gateway
 curl -X GET \
-  https://apilio-backend.onrender.com/gateway/YOUR_API_ID/pokemon/pikachu \
+  https://meterflow-backend.onrender.com/gateway/YOUR_API_ID/pokemon/pikachu \
   -H "x-api-key: mf_live_your_key_here"
 
 # Response includes rate limit headers:
@@ -400,11 +400,6 @@ Use these test credentials in the Razorpay modal:
 
 ---
 
-## 🎯 How to Explain in Interviews
-
-> "I built Apilio — a usage-based API billing platform with a custom API gateway that intercepts every request, validates API keys using Redis caching, applies per-key rate limiting, logs usage to MongoDB, and forwards to external APIs. The billing engine dynamically calculates costs based on monthly usage with a free tier and pay-as-you-go model — similar to how OpenAI and AWS charge for API usage. The platform supports two roles: API owners who publish and monetize APIs, and consumers who request access and pay based on usage."
-
----
 
 ## 📈 Key Technical Decisions
 
