@@ -6,9 +6,10 @@ const getRedis = () => {
   }
 };
 
-const checkRateLimit = async (apiKeyId, rateLimit = 10) => {
+const checkRateLimit = async (apiKeyId, rateLimit) => {
   const redis = getRedis();
 
+  // If Redis not available use MongoDB fallback
   if (!redis) {
     return {
       isAllowed: true,
@@ -20,25 +21,25 @@ const checkRateLimit = async (apiKeyId, rateLimit = 10) => {
   }
 
   try {
-    const redisKey = `ratelimit:${apiKeyId}`;
+    const currentMinute = Math.floor(Date.now() / 60000);
+    const redisKey = `ratelimit:${apiKeyId}:${currentMinute}`;
     const currentCount = await redis.incr(redisKey);
 
     if (currentCount === 1) {
-      await redis.expire(redisKey, 60);
+      await redis.expire(redisKey, 120);
     }
 
-    const ttl = await redis.ttl(redisKey);
+    const isAllowed = currentCount <= rateLimit;
 
     return {
-      isAllowed: currentCount <= rateLimit,
+      isAllowed,
       currentCount,
       limit: rateLimit,
       remaining: Math.max(0, rateLimit - currentCount),
-      resetInSeconds: ttl,
+      resetInSeconds: 60 - (Math.floor(Date.now() / 1000) % 60),
     };
   } catch (error) {
-    console.error("Rate limit error:", error);
-
+    console.error("Rate limit check error:", error.message);
     return {
       isAllowed: true,
       currentCount: 0,
