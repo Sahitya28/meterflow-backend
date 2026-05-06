@@ -12,17 +12,19 @@ const app = express();
 // Allow requests from frontend URL in production
 const allowedOrigins = [
   "http://localhost:3000",
-  process.env.FRONTEND_URL, // your Vercel URL
+  "https://meterflow-frontend-eight.vercel.app", // your Vercel URL
 ];
 
 app.use(
   cors({
-    origin: (origin, callback) => {
-      // Allow requests with no origin (Postman, mobile apps)
+    origin: function (origin, callback) {
       if (!origin) return callback(null, true);
+
       if (allowedOrigins.includes(origin)) {
         return callback(null, true);
       }
+
+      console.log("Blocked by CORS:", origin); 
       return callback(new Error("Not allowed by CORS"));
     },
     credentials: true,
